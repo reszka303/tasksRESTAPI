@@ -1,15 +1,14 @@
 package com.crud.tasks.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
+@EqualsAndHashCode
 @Entity(name = "tasks")
 public class Task {
     @Id

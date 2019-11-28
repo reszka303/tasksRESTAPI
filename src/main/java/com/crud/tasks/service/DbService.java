@@ -2,7 +2,6 @@ package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.repository.TaskRepository;
-import jdk.nashorn.internal.runtime.options.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +27,9 @@ public class DbService {
 
     public Optional<Task> getTask(final Long id) {
         return repository.findById(id);
+    }
+
+    public void deleteTaskById(final Long id) {
+        repository.deleteById(id);
     }
 }
