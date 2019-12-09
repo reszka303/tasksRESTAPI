@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@CrossOrigin(origins = "*")
 @Service
 @RestController
 @RequestMapping("/v1/task")
@@ -41,7 +42,7 @@ public class TaskController {
         return taskMapper.mapToTaskDto(service.saveTask(taskMapper.mapToTask(taskDto)));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "delete")
+    @RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")
     public void deleteTask(@RequestParam Long taskId) {
         service.deleteTaskById(taskId);
     }
