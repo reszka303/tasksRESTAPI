@@ -38,8 +38,8 @@ public class TaskController {
         return taskMapper.mapToTaskDto(service.saveTask(taskMapper.mapToTask(taskDto)));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/tasks/{taskId}")
-    public void deleteTask(@PathVariable Long taskId)  {
+    @RequestMapping(method = RequestMethod.DELETE, value = "/tasks")
+    public void deleteTask(@RequestParam Long taskId)  {
         service.deleteTaskById(taskId);
     }
 }
