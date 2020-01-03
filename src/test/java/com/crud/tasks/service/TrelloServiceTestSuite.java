@@ -51,4 +51,21 @@ public class TrelloServiceTestSuite {
         //Then
         assertEquals("testName", createdTrelloCardDto.getName());
     }
+
+    //========================================
+
+
+    @Test
+    public void testFetchEmptyTrelloBoards() {
+        //Given
+        List<TrelloBoardDto> trelloBoardDtoStub = new ArrayList<>();
+        when(trelloClient.getTrelloBoards()).thenReturn(trelloBoardDtoStub);
+
+        //When
+        List<TrelloBoardDto> fetchedEmptyTrelloBoardDto = trelloService.fetchTrelloBoards();
+
+        //Then
+        assertEquals(0, fetchedEmptyTrelloBoardDto.size());
+    }
+
 }

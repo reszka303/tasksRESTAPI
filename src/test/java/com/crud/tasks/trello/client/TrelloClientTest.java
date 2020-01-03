@@ -4,6 +4,7 @@ import com.crud.tasks.domain.CreatedTrelloCardDto;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,6 +21,7 @@ import java.util.List;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -102,4 +105,41 @@ public class TrelloClientTest {
         //Then
         assertEquals(0, fetchedTrelloBoards.size());
     }
+
+    @Test
+    public void testTrelloConfigApiEndpoint() {
+        TrelloConfig trelloConfig = new TrelloConfig();
+
+        trelloConfig.getTrelloApiEndpoint();
+
+        Assert.assertEquals(trelloConfig, trelloConfig);
+    }
+
+    @Test
+    public void testTrelloConfigAppKey() {
+        TrelloConfig trelloConfig = new TrelloConfig();
+
+        trelloConfig.getTrelloAppKey();
+
+        Assert.assertEquals(trelloConfig, trelloConfig);
+    }
+
+    @Test
+    public void testTrelloConfigToken() {
+        TrelloConfig trelloConfig = new TrelloConfig();
+
+        trelloConfig.getTrelloToken();
+
+        Assert.assertEquals(trelloConfig, trelloConfig);
+    }
+
+    @Test
+    public void testTrelloConfigUsername() {
+        TrelloConfig trelloConfig = new TrelloConfig();
+
+        trelloConfig.getTrelloUsername();
+
+        Assert.assertEquals(trelloConfig, trelloConfig);
+    }
+
 }

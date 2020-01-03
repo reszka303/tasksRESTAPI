@@ -1,5 +1,6 @@
 package com.crud.tasks.domain;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,5 +27,61 @@ public class TaskDtoTest {
         assertEquals(2L, resultId);
         assertEquals("testTaskDtoTitle", resulTitle);
         assertEquals("testTaskDtoContent", resultContent);
+    }
+    //--------------------------
+    @Test
+    public void testAtachmentsByType() {
+        AttachmentsByType attachmentsByType = new AttachmentsByType();
+
+        attachmentsByType.getTrello();
+
+        Assert.assertEquals(attachmentsByType,attachmentsByType);
+    }
+
+    @Test
+    public void testBadgesDtoType() {
+        BadgesDto badgesDto = new BadgesDto();
+
+
+        badgesDto.getAttachmentsByType();
+
+        Assert.assertEquals(badgesDto, badgesDto);
+
+    }
+
+    @Test
+    public void testBadgesDtoVotes() {
+        BadgesDto badgesDtoVotes = new BadgesDto();
+
+        badgesDtoVotes.getVotes();
+
+        Assert.assertEquals(badgesDtoVotes, badgesDtoVotes);
+    }
+
+    @Test
+    public void testTrelloBoard() {
+        Trello trelloBoard = new Trello();
+
+        trelloBoard.getBoard();
+
+        Assert.assertEquals(trelloBoard, trelloBoard);
+    }
+
+    @Test
+    public void testTrelloCard() {
+        Trello trelloBoard = new Trello();
+
+        trelloBoard.getCard();
+
+        Assert.assertEquals(trelloBoard, trelloBoard);
+    }
+
+    @Test
+    public void testTaskCanEqual() {
+        Task task = new Task();
+
+        task.canEqual(true);
+
+        Assert.assertEquals(task,task);
     }
 }

@@ -1,13 +1,14 @@
 package com.crud.tasks.controller;
 
+import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.domain.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
 import com.google.gson.Gson;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,10 +18,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -38,6 +41,9 @@ public class TaskControllerTest {
 
     @MockBean
     private TaskMapper taskMapper;
+
+    @MockBean
+    private AdminConfig adminConfig;
 
     @Test
     public void getEmptyTasks() throws Exception {
@@ -110,7 +116,7 @@ public class TaskControllerTest {
         Task taskTest = new Task(1L, "testTitle", "testContent");
         TaskDto taskTestDto = new TaskDto(1L, "testTitle", "testContent");
 
-        when(taskMapper.mapToTask(ArgumentMatchers.any(TaskDto.class))).thenReturn(taskTest);
+        when(taskMapper.mapToTask(any(TaskDto.class))).thenReturn(taskTest);
         when(dbService.saveTask(taskTest)).thenReturn(taskTest);
         when(taskMapper.mapToTaskDto(taskTest)).thenReturn(taskTestDto);
 
@@ -146,4 +152,35 @@ public class TaskControllerTest {
                 .content(jsonContent))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void AdminConfigTest() {
+        AdminConfig adminConfig = new AdminConfig();
+
+        adminConfig.getAdminCompany();
+
+        Assert.assertEquals(adminConfig,adminConfig);
+
+    }
+
+    @Test
+    public void AdminConfigTest1() {
+        AdminConfig adminConfig = new AdminConfig();
+
+        adminConfig.getAdminMail();
+
+        Assert.assertEquals(adminConfig,adminConfig);
+
+    }
+
+    @Test
+    public void AdminConfigTest2() {
+        AdminConfig adminConfig = new AdminConfig();
+
+        adminConfig.getAdminName();
+
+        Assert.assertEquals(adminConfig,adminConfig);
+
+    }
+
 }

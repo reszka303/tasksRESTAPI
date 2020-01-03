@@ -13,8 +13,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.samePropertyValuesAs;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
@@ -57,6 +59,8 @@ public class TrelloFacadeTest {
         assertEquals(0, trelloBoardDtos.size());
     }
 
+
+    //-----------------------------------------------
     @Test
     public void shouldFetchTrelloBoards() {
         //Given
@@ -114,5 +118,53 @@ public class TrelloFacadeTest {
         assertEquals("testTrelloCardDtoDescription", resultDescription);
         assertEquals("testTrelloCardDtoPos", resultPosition);
         assertEquals("testTrelloCardDtoID", resultListId);
+    }
+
+    @Test
+    public void shouldFetchTrelloBoardss() {
+
+        // Given
+        List<TrelloListDto> trelloLists = new ArrayList<>();
+        trelloLists.add(new TrelloListDto("1", "my_list", false));
+
+        List<TrelloBoardDto> trelloBoards = new ArrayList<>();
+        trelloBoards.add(new TrelloBoardDto("1", "my_task", trelloLists));
+
+        List<TrelloList> mappedTrelloLists = new ArrayList<>();
+        mappedTrelloLists.add(new TrelloList("1", "my_list", false));
+
+        List<TrelloBoard> mappedTrelloBoards = new ArrayList<>();
+        mappedTrelloBoards.add(new TrelloBoard("1", "my_task", mappedTrelloLists));
+
+        when(trelloService.fetchTrelloBoards()).thenReturn(trelloBoards);
+        when(trelloMapper.mapToBoards(trelloBoards)).thenReturn(mappedTrelloBoards);
+        when(trelloMapper.mapToBoardsDto(anyList())).thenReturn(trelloBoards);
+        when(trelloValidator.validateTrelloBoards(mappedTrelloBoards)).thenReturn(mappedTrelloBoards);
+
+        // When
+        List<TrelloBoardDto> trelloBoardDtos = trelloFacade.fetchTrelloBoards();
+
+        // Then
+        assertNotNull(trelloBoardDtos);
+        assertEquals(1, trelloBoardDtos.size());
+
+        trelloBoardDtos.forEach(trelloBoardDto -> {
+            assertEquals("1", trelloBoardDto.getId());
+            assertEquals("my_task", trelloBoardDto.getName());
+
+            trelloBoardDto.getLists().forEach(trelloListDto -> {
+                assertEquals("1", trelloListDto.getId());
+                assertEquals("my_list", trelloListDto.getName());
+                assertEquals(false, trelloListDto.isClosed());
+            });
+        });
+
+        // alternative method using Hamcrest
+        assertThat(trelloBoardDtos.get(0).getLists().get(0), hasProperty("id", equalTo("1")));
+        assertThat(trelloBoardDtos.get(0).getLists().get(0), hasProperty("name", equalTo("my_list")));
+
+        assertThat(trelloBoardDtos, samePropertyValuesAs(trelloBoards)); // <<-- nice one!
+
+        assertFalse(trelloBoardDtos.get(0).getLists().get(0).isClosed());
     }
 }
