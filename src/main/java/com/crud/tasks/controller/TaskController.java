@@ -42,7 +42,4 @@ public class TaskController {
     public void deleteTask(@RequestParam Long taskId)  {
         service.deleteTaskById(taskId);
     }
-
-
-
 }
